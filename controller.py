@@ -47,9 +47,6 @@ def start():
                     name = model.delete_contact(uid)
                     view.print_msg(text.delete_success(name))
             case 8:
-                print(model.phone_book)
-                print(origin_book)
-
                 if model.phone_book != origin_book:
                     flag = view.input_data(text.save_flag)
 
