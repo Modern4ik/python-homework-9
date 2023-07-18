@@ -1,4 +1,7 @@
 import text
+from model import Contact
+from model import PhoneBook
+
 
 def show_menu() -> int:
     for i, item in enumerate(text.main_menu):
@@ -17,24 +20,16 @@ def show_menu() -> int:
         else:
             select_option = input(text.main_menu_input_error)
 
-def show_contacts(book: dict[int, list[str]], msg: str):
+def show_contacts(book: PhoneBook, msg: str):
     if book:
-        max_n, max_p, max_c = 0, 0, 0
-
-        for contact in book.values():
-            if max_n < len(contact[0]):
-                max_n = len(contact[0])
-            if max_p < len(contact[1]):
-                max_p = len(contact[1])
-            if max_c < len(contact[2]):
-                max_c = len(contact[2])
+        max_n, max_p, max_c = book.get_max_field()
 
         print('\n' + '=' * (7 + max_n + max_p + max_c))
-        for uid, contact in book.items():
-            print(f'{uid: >3}. {contact[0]: <{max_n}} {contact[1]: <{max_p}} {contact[2]: <{max_c}}')
+        for uid, contact in book.phone_book.items():
+            print(f'{uid: >3}. {contact.to_show(max_n, max_p, max_c)}')
         print('=' * (7 + max_n + max_p + max_c) + '\n')
     else:
-        print(msg)
+        print_msg(msg)
    
 
 def input_new_contact(new_contact_lst: list[str]):
